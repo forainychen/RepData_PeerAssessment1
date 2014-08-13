@@ -2,12 +2,29 @@
 
 
 ## Loading and preprocessing the data
-
-
+```{r}
+data <- read.csv(file="activity.csv",head=TRUE,sep=",")
+total_steps <- tapply(data$steps, data$date, FUN=sum)
+total_steps
+```
 
 ## What is mean total number of steps taken per day?
+Make a histogram of the total number of steps taken each day
 
+```{r}
+hist(total_steps, breaks=10)
+```
 
+The mean of total number of steps each day
+```{r}
+mean(total_steps, na.rm=TRUE)
+```
+
+The median of total number of steps each day
+```{r}
+median(total_steps, na.rm=TRUE)
+summary(total_steps)
+```
 
 ## What is the average daily activity pattern?
 
