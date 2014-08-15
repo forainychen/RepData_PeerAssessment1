@@ -94,7 +94,6 @@ Calculating the average daily steps for weekday and plot
 ```{r}
 daily_ave <- aggregate(steps[data$weekday] ~ interval[data$weekday], 
                        data, FUN=mean)
-daily_ave
 plot(daily_ave$interval, daily_ave$steps, type="l", xlab="interval",
      ylab="average steps per day", main="Weekday")
 ```
