@@ -107,27 +107,20 @@ Since we fill the missing value with the mean of steps of each day, there is not
 Add new column to the imputing data indicating whether it is weekday or weekend
 
 ```r
-data$weekday <- !(weekdays(as.Date(data$date)) %in% c("Saturday", "Sunday"))
+data$day <- ifelse((weekdays(as.Date(data$date)) %in% c("Saturday", "Sunday")), "weekend", "weekday")
 ```
 
-Calculating the average daily steps for weekday and plot
+Calculating the average daily steps for weekday and weekend, respectively.
 
 ```r
-daily_ave <- aggregate(steps[data$weekday] ~ interval[data$weekday], 
-                       data, FUN=mean)
-plot(daily_ave$interval, daily_ave$steps, type="l", xlab="interval",
-     ylab="average steps per day", main="Weekday")
+daily_ave <- aggregate(steps ~ interval + day, data, mean)
 ```
 
-![plot of chunk unnamed-chunk-15](figure/unnamed-chunk-15.png) 
-
-Calculating the average daily steps for weekend and plot
+Plot the figure
 
 ```r
-daily_ave <- aggregate(steps[!data$weekday] ~ interval[!data$weekday], 
-                       data, FUN=mean)
-plot(daily_ave$interval, daily_ave$steps, type="l", xlab="interval",
-     ylab="average steps per day", main="Weekend")
+library(lattice)
+xyplot(steps ~ interval | day, daily_ave, type="l", layout = c(1,2))
 ```
 
 ![plot of chunk unnamed-chunk-16](figure/unnamed-chunk-16.png) 
